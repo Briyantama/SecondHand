@@ -35,21 +35,17 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater,container,false)
 
         binding.passwordToggle.setOnClickListener {
-            isShowPass =  !isShowPass
-            showPassword(isShowPass)
+            isShowPass = !isShowPass
+            viewModel.show(binding.edPassword, binding.passwordToggle, isShowPass)
         }
 
-        showPassword(isShowPass)
+        viewModel.show(binding.edPassword, binding.passwordToggle, isShowPass)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedPref = Sharedpref(requireContext())
-        val status = sharedPref.getBooleanKey("login")
-        if (status){
-            view.findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
-        }
 
         setUpObserver()
 
@@ -72,17 +68,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun showPassword(isShow : Boolean){
-        if (isShow){
-            binding.edPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-            binding.passwordToggle.setImageResource(R.drawable.ic_outline_remove_red_eye_24)
-        }else{
-            binding.edPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-            binding.passwordToggle.setImageResource(R.drawable.ic_outline_visibility_off_24)
-        }
-        binding.edPassword.setSelection(binding.edPassword.text.toString().length)
-    }
-
     private fun setUpObserver() {
 
         viewModel.loginPostResponse.observe(viewLifecycleOwner) {
@@ -100,29 +85,24 @@ class LoginFragment : Fragment() {
                             val accesToken = data?.accessToken
 
                             getKoin().setProperty("access_token", accesToken.toString())
-
                             sharedPref = Sharedpref(requireContext())
                             sharedPref.putBooleanKey("login", true)
                             findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
                         }
 
-                        404 -> {
-                            val snackbar = Snackbar.make(binding.root, "Email or Password Are Wrong", Snackbar.LENGTH_INDEFINITE)
-                            snackbar.setAction("Oke") {}
-                            snackbar.show()
-
+                        401 -> {
+                            viewModel.snackbarWithAction("Email or Password Are Wrong","Oke", {}, requireView())
                         }
 
                         500 -> {
-                            Snackbar.make(binding.root, "Internal Service Error", Snackbar.LENGTH_INDEFINITE).show()
+                            viewModel.snackbar("Internal Service Error", binding.root)
                         }
                     }
                 }
 
                 Status.ERROR -> {
-
                     val error = it.message
-                    Toast.makeText(context, "$error", Toast.LENGTH_SHORT).show()
+                    viewModel.toast(error.toString(), requireContext())
                 }
             }
         }

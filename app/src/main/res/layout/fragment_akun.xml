@@ -33,6 +33,90 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/akun" />
 
+    <TextView
+        android:id="@+id/tv_nama_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Nama"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/iv_user_photo"
+        app:layout_constraintStart_toStartOf="@+id/iv_user_photo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_photo" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@id/tv_nama_user"
+        app:layout_constraintStart_toStartOf="@id/tv_nama_user"
+        app:layout_constraintTop_toBottomOf="@id/tv_nama_user">
+
+        <ImageView
+            android:id="@+id/iv_ic_whatsapp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_whatsapp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_no_whatsapp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_whatsapp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/poppins"
+            android:text="081234567890"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ic_whatsapp"
+            app:layout_constraintStart_toEndOf="@id/iv_ic_whatsapp"
+            app:layout_constraintTop_toTopOf="@+id/iv_ic_whatsapp" />
+
+        <View
+            android:id="@+id/iv_line_satu"
+            android:layout_width="1dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="14dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/iv_ic_whatsapp"
+            app:layout_constraintStart_toEndOf="@id/tv_no_whatsapp"
+            app:layout_constraintTop_toTopOf="@id/iv_ic_whatsapp" />
+
+
+        <ImageView
+            android:id="@+id/iv_ic_location"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_location_fix"
+            app:layout_constraintBottom_toBottomOf="@id/iv_ic_whatsapp"
+            app:layout_constraintEnd_toStartOf="@id/tv_location"
+            app:layout_constraintStart_toEndOf="@id/iv_line_satu"
+            app:layout_constraintTop_toTopOf="@id/iv_ic_whatsapp"
+            app:tint="@color/primary_purple" />
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/poppins"
+            android:text="Lokasi"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_ic_location"
+            app:layout_constraintStart_toEndOf="@id/iv_ic_location"
+            app:layout_constraintTop_toTopOf="@id/iv_ic_location" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ubah_akun"
         android:layout_width="match_parent"
@@ -40,11 +124,11 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="12dp"
-        android:padding="4dp"
         android:background="@color/on_click"
+        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_user_photo">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <TextView
             android:id="@+id/tv_ubah_akun"

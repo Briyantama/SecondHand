@@ -22,10 +22,13 @@
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_fi_search.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_fi_search_none.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1935" />
+        <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_location_fix.xml" value="0.1" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_outline_image_24.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_outline_remove_red_eye_24.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_outline_visibility_off_24.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_select_photo.xml" value="0.1935" />
+        <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_ubah_akun.xml" value="0.205" />
+        <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/ic_whatsapp.xml" value="0.1" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/pass_select.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/product_round_corner.xml" value="0.1935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/drawable/rectangle.xml" value="0.1935" />
@@ -37,7 +40,7 @@
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/action_bar_normal.xml" value="0.1703125" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/activity_complete_account.xml" value="0.18541666666666667" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/banner.xml" value="0.18541666666666667" />
-        <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/fragment_akun.xml" value="0.5" />
+        <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/fragment_akun.xml" value="0.75" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/fragment_detail.xml" value="0.5" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/fragment_home.xml" value="0.2860696517412935" />
         <entry key="..\:/Users/BRIYAN/Downloads/SecondHand-develop-briyan/app/src/main/res/layout/fragment_item.xml" value="0.5" />

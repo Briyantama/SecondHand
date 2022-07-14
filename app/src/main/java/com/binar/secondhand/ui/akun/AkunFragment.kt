@@ -94,8 +94,10 @@ class AkunFragment : Fragment() {
                                     .placeholder(R.color.black)
                                     .into(binding.ivUserPhoto)
                             }
-//                            binding.tvNama.text = it.data.body()?.fullName
-//                            binding.tvNoHandphone.text = "+62"+ it.data.body()?.phoneNumber
+
+                            binding.tvNamaUser.text = it.data.body()?.fullName
+                            binding.tvNoWhatsapp.text = it.data.body()?.phoneNumber
+                            binding.tvLocation.text = it.data.body()?.city
                         }
                     }
                 }
