@@ -1,10 +1,11 @@
-package com.binar.secondhand
+package com.binar.secondhand.app
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.binar.secondhand.R
 import com.binar.secondhand.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

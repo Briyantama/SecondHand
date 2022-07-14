@@ -106,7 +106,7 @@ class RegisterFragment : Fragment() {
                             findNavController().navigateUp()
                         }
 
-                        400 -> {
+                        404 -> {
                             Snackbar.make(binding.root, "Email Already Exists", Snackbar.LENGTH_INDEFINITE).show()
                         }
 
@@ -143,6 +143,6 @@ class RegisterFragment : Fragment() {
             binding.edPassword2.transformationMethod = PasswordTransformationMethod.getInstance()
             binding.passwordToggle2.setImageResource(R.drawable.ic_outline_visibility_off_24)
         }
-        binding.edPassword2.setSelection(binding.edPassword.text.toString().length)
+        binding.edPassword2.setSelection(binding.edPassword2.text.toString().length)
     }
 }

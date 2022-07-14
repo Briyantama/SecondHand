@@ -1,7 +1,5 @@
 package com.binar.secondhand.ui.home
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.binar.secondhand.R
+import com.binar.secondhand.helper.Sharedpref
 import com.binar.secondhand.data.api.model.buyer.product.GetProductResponse
 import com.binar.secondhand.data.api.model.seller.banner.get.GetBannerResponse
 import com.binar.secondhand.data.resource.Status
@@ -24,7 +23,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val homeViewModel by viewModel<HomeViewModel>()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,9 +35,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("SP_INFO", Context.MODE_PRIVATE)
-        val loginStatus = sharedPreferences .getInt("login",0)
-        if (loginStatus == 0){
+        val sharedPref = Sharedpref(requireContext())
+        val status = sharedPref.getBooleanKey("login")
+        if (!status){
             view.findNavController().navigate(R.id.action_navigation_home_to_loginFragment)
         }
         setUpObserver()
@@ -127,13 +125,13 @@ class HomeFragment : Fragment() {
                         }
 
                         else ->{
-                            Snackbar.make(binding.root, "Error occured: ${it.data?.code()}", Snackbar.LENGTH_INDEFINITE).show()
+                            Snackbar.make(binding.root, "Error occured: ${it.data?.code()}", Snackbar.LENGTH_LONG).show()
                         }
                     }
                 }
 
                 Status.ERROR -> {
-                    Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_INDEFINITE).show()
+                    Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_LONG).show()
                 }
             }
         }

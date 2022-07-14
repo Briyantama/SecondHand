@@ -5,6 +5,7 @@ import org.koin.androidx.viewmodel.dsl.viewModelOf
 import com.binar.secondhand.ui.login.LoginUserViewModel
 import com.binar.secondhand.ui.login.RegisterUserViewModel
 import com.binar.secondhand.ui.home.HomeViewModel
+import com.binar.secondhand.ui.akun.AkunViewModel
 
 val viewModelModule = module {
     viewModelOf(::LoginUserViewModel)
@@ -12,4 +13,6 @@ val viewModelModule = module {
     viewModelOf(::RegisterUserViewModel)
 
     viewModelOf(::HomeViewModel)
+
+    viewModelOf(::AkunViewModel)
 }

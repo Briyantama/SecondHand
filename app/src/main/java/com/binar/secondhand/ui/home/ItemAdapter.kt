@@ -1,6 +1,7 @@
 package com.binar.secondhand.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -8,15 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.binar.secondhand.R
 import com.binar.secondhand.data.api.model.buyer.product.GetProductResponseItem
 import com.binar.secondhand.databinding.ItemHomeBinding
+import com.binar.secondhand.helper.Util
 import com.bumptech.glide.Glide
-import java.text.DecimalFormat
-import java.text.NumberFormat
 
 class ItemAdapter(private val onClick: (GetProductResponseItem) -> Unit):
-    ListAdapter<GetProductResponseItem, ItemAdapter.ViewHolder>(CommunityComparator()){
+    ListAdapter<GetProductResponseItem, ItemAdapter.ViewHolder>(CommunityComparator()) {
 
-    class ViewHolder(private val binding: ItemHomeBinding) :
+    inner class ViewHolder(private val binding: ItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private val util = Util(binding.root.context)
 
         fun bind(
             currentGetProductResponseItem: GetProductResponseItem,
@@ -32,10 +34,7 @@ class ItemAdapter(private val onClick: (GetProductResponseItem) -> Unit):
             binding.tvCategory.text = currentGetProductResponseItem.categories?.joinToString{
                 it.name
             }
-            val formatter: NumberFormat = DecimalFormat("#,###")
-            val myNumber = currentGetProductResponseItem.basePrice
-            val formattedNumber: String = formatter.format(myNumber).toString()
-            binding.tvPrice.text = "Rp. $formattedNumber"
+            binding.tvPrice.text = util.rupiah(currentGetProductResponseItem.basePrice)
         }
 
     }

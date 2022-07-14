@@ -1,7 +1,8 @@
-package com.binar.secondhand
+package com.binar.secondhand.app
 
 import android.app.Application
 import android.content.Context
+import com.binar.secondhand.helper.Sharedpref
 import com.binar.secondhand.di.databaseModule
 import com.binar.secondhand.di.networkModule
 import com.binar.secondhand.di.repositoryModule
@@ -10,7 +11,6 @@ import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
 
 class SecondHandApp: Application() {
 
@@ -19,22 +19,18 @@ class SecondHandApp: Application() {
     }
     companion object {
         private lateinit var instance: SecondHandApp
-
+        private lateinit var sharedpref: Sharedpref
         fun getContext(): Context {
             return instance.applicationContext
         }
     }
     override fun onCreate() {
         super.onCreate()
-        val pref = instance.getSharedPreferences("SP_INFO", Context.MODE_PRIVATE)
-        val token = pref.getString("token", "")
+        sharedpref = Sharedpref(getContext())
         FirebaseApp.initializeApp(this)
         startKoin {
             androidLogger()
-            androidContext(this@SecondHandApp)
-            if (!token.isNullOrEmpty()){
-                koin.setProperty("access_token", token)
-            }
+            androidContext(getContext())
             modules(
                 repositoryModule,
                 viewModelModule,

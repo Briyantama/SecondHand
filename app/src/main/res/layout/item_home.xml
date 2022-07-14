@@ -6,6 +6,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/img_product"
+        android:backgroundTint="@color/on_click"
+        android:background="@drawable/product_round_corner"
         android:padding="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

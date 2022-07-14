@@ -38,7 +38,7 @@
         android:label="@string/daftar_jual"
         tools:layout="@layout/fragment_product_list">
         <action
-            android:id="@+id/action_navigation_list_to_blankFragment"
+            android:id="@+id/action_navigation_list_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
 
@@ -52,12 +52,18 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mobile_navigation"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_navigation_akun_to_changePassFragment"
+            app:destination="@id/changePassFragment" />
+        <action
+            android:id="@+id/action_navigation_akun_to_ubahAkunFragment"
+            app:destination="@id/ubahAkunFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.binar.secondhand.ui.detail.DetailFragment"
-        android:label="fragment_blank"
+        android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
             android:name="item_id"
@@ -82,5 +88,15 @@
         android:name="com.binar.secondhand.ui.login.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/changePassFragment"
+        android:name="com.binar.secondhand.ChangePassFragment"
+        android:label="fragment_change_pass"
+        tools:layout="@layout/fragment_change_pass" />
+    <fragment
+        android:id="@+id/ubahAkunFragment"
+        android:name="com.binar.secondhand.UbahAkunFragment"
+        android:label="fragment_ubah_akun"
+        tools:layout="@layout/fragment_ubah_akun" />
 
 </navigation>

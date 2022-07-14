@@ -1,29 +1,24 @@
 package com.binar.secondhand.ui.login
 
-import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.binar.secondhand.R
 import com.binar.secondhand.data.api.model.auth.login.PostLoginRequest
-import com.binar.secondhand.data.resource.Resource
 import com.binar.secondhand.data.resource.Status
 import com.binar.secondhand.databinding.FragmentLoginBinding
+import com.binar.secondhand.helper.Sharedpref
 import com.google.android.material.snackbar.Snackbar
-import okhttp3.Interceptor.Companion.invoke
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.android.ext.android.getKoin
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
@@ -31,6 +26,7 @@ class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<LoginUserViewModel>()
+    private lateinit var sharedPref : Sharedpref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,9 +45,9 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPreferences : SharedPreferences = requireActivity().getSharedPreferences("SP_INFO", Context.MODE_PRIVATE)
-        val loginStatus = sharedPreferences .getInt("login",0)
-        if (loginStatus == 1){
+        sharedPref = Sharedpref(requireContext())
+        val status = sharedPref.getBooleanKey("login")
+        if (status){
             view.findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
         }
 
@@ -89,8 +85,6 @@ class LoginFragment : Fragment() {
 
     private fun setUpObserver() {
 
-        val preferences = this.requireActivity().getSharedPreferences("SP_INFO", Context.MODE_PRIVATE)
-
         viewModel.loginPostResponse.observe(viewLifecycleOwner) {
             when (it.status) {
 
@@ -103,19 +97,16 @@ class LoginFragment : Fragment() {
                         201 -> {
                             val data = it.data.body()
 
-                            val name = data?.name
-                            val email = data?.email
                             val accesToken = data?.accessToken
 
                             getKoin().setProperty("access_token", accesToken.toString())
 
-                            val sharedEditor = preferences.edit()
-                            sharedEditor.putInt("login",1)
-                            sharedEditor.apply()
+                            sharedPref = Sharedpref(requireContext())
+                            sharedPref.putBooleanKey("login", true)
                             findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
                         }
 
-                        401 -> {
+                        404 -> {
                             val snackbar = Snackbar.make(binding.root, "Email or Password Are Wrong", Snackbar.LENGTH_INDEFINITE)
                             snackbar.setAction("Oke") {}
                             snackbar.show()
