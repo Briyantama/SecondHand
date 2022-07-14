@@ -4,10 +4,12 @@ import com.binar.secondhand.data.api.model.auth.login.PostLoginRequest
 import com.binar.secondhand.data.api.model.auth.password.PutPassRequest
 import com.binar.secondhand.data.api.model.auth.register.PostRegisterRequest
 import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderRequest
+import com.binar.secondhand.data.api.model.seller.order.PatchSellerOrderIdRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class ApiHelper(private val apiService: ApiService) {
+
+class ApiHelper(val apiService: ApiService) {
     suspend fun postLogin(request: PostLoginRequest) = apiService.postLogin(request)
 
     suspend fun postRegister(request: PostRegisterRequest) = apiService.postRegister(request)
@@ -49,8 +51,8 @@ class ApiHelper(private val apiService: ApiService) {
     )
     suspend fun getProductDetail(productId: Int) = apiService.getProductDetail(productId)
     suspend fun getUserProfile(userId: Int) = apiService.getUserProfile(userId)
-
-    suspend fun postBuyerOrder(request: PostOrderRequest) = apiService.postBuyerOrder(request)
+    suspend fun getBuyerOrder() = apiService.getBuyerOrder()
+    suspend fun postBuyerOrder(requestBuyerOrder: PostOrderRequest) = apiService.postBuyerOrder(requestBuyerOrder)
     suspend fun getCategory() = apiService.getCategory()
     suspend fun getProductId(id: Int) = apiService.getProductId(id)
 
@@ -72,4 +74,10 @@ class ApiHelper(private val apiService: ApiService) {
 
     //product sale list
     suspend fun getSellerProduct() = apiService.getSellerProduct()
+
+    suspend fun getSellerOrder() = apiService.getSellerOrder()
+
+    suspend fun getSellerOrderId(id:Int) = apiService.getSellerOrderId(id)
+
+    suspend fun patchSellerOrderId(id:Int, request: PatchSellerOrderIdRequest) = apiService.patchSellerOrderId(id, request)
 }

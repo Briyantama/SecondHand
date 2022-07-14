@@ -1,10 +1,11 @@
 package com.binar.secondhand.data.repository
 
 import com.binar.secondhand.data.api.model.auth.password.PutPassRequest
+import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderRequest
+import com.binar.secondhand.data.api.model.seller.order.PatchSellerOrderIdRequest
 import com.binar.secondhand.data.api.service.ApiHelper
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderRequest
 
 class Repository(private val apiHelper: ApiHelper) {
 
@@ -31,10 +32,11 @@ class Repository(private val apiHelper: ApiHelper) {
     suspend fun putPass(request: PutPassRequest) = apiHelper.putPass(request)
 
     suspend fun getNotification() = apiHelper.getNotification()
+    suspend fun getBuyerOrder() = apiHelper.getBuyerOrder()
     suspend fun getProductId(id: Int) = apiHelper.getProductId(id)
     suspend fun getProductDetail(productId: Int) = apiHelper.getProductDetail(productId)
     suspend fun getUserProfile(userId: Int) = apiHelper.getUserProfile(userId)
-    suspend fun postBuyerOrder(request: PostOrderRequest) = apiHelper.postBuyerOrder(request)
+    suspend fun postBuyerOrder(requestBuyerOrder: PostOrderRequest) = apiHelper.postBuyerOrder(requestBuyerOrder)
     suspend fun postProduct(
         name: RequestBody,
         description: RequestBody,
@@ -50,4 +52,7 @@ class Repository(private val apiHelper: ApiHelper) {
         location,
         image
     )
+    suspend fun getSellerOrderId(id:Int) = apiHelper.getSellerOrderId(id)
+
+    suspend fun patchSellerOrderId(id:Int, request: PatchSellerOrderIdRequest) = apiHelper.patchSellerOrderId(id, request)
 }

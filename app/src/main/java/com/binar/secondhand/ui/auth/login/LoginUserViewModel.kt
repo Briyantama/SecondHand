@@ -1,4 +1,4 @@
-package com.binar.secondhand.ui.login
+package com.binar.secondhand.ui.auth.login
 
 import android.content.Context
 import android.view.View
@@ -12,8 +12,8 @@ import com.binar.secondhand.data.api.model.auth.login.PostLoginRequest
 import com.binar.secondhand.data.api.model.auth.login.PostLoginResponse
 import com.binar.secondhand.data.repository.LoginRepository
 import com.binar.secondhand.data.resource.Resource
-import com.binar.secondhand.helper.HelperShowPassword
-import com.binar.secondhand.helper.NotifHelper
+import com.binar.secondhand.helper.ShowPassword
+import com.binar.secondhand.helper.Notif
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -21,8 +21,8 @@ class LoginUserViewModel(private val repository: LoginRepository): ViewModel() {
 
         private val _loginPostResponse = MutableLiveData<Resource<Response<PostLoginResponse>>>()
         val loginPostResponse: LiveData<Resource<Response<PostLoginResponse>>> get() = _loginPostResponse
-        private val showPass get() = HelperShowPassword()
-        private val notif get() = NotifHelper()
+        private val showPass get() = ShowPassword()
+        private val notif get() = Notif()
 
         fun postLogin(request: PostLoginRequest){
                 viewModelScope.launch {

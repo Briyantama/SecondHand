@@ -10,12 +10,16 @@ import com.binar.secondhand.data.api.model.auth.register.PostRegisterRequest
 import com.binar.secondhand.data.api.model.auth.register.PostRegisterResponse
 import com.binar.secondhand.data.api.model.auth.user.GetAuthResponse
 import com.binar.secondhand.data.api.model.auth.user.PutAuthResponse
+import com.binar.secondhand.data.api.model.buyer.order.get.GetOrderResponse
 import com.binar.secondhand.data.api.model.notification.GetNotificationResponse
 import com.binar.secondhand.data.api.model.seller.banner.get.GetBannerResponse
 import com.binar.secondhand.data.api.model.seller.category.get.GetCategoryResponse
 import com.binar.secondhand.data.api.model.buyer.product.GetProductResponse
 import com.binar.secondhand.data.api.model.buyer.productid.GetProductIdResponse
 import com.binar.secondhand.data.api.model.buyer.productid.UserProduct
+import com.binar.secondhand.data.api.model.seller.order.PatchSellerOrderIdRequest
+import com.binar.secondhand.data.api.model.seller.order.PatchSellerOrderIdResponse
+import com.binar.secondhand.data.api.model.seller.order.SellerOrderIdResponse
 import com.binar.secondhand.data.api.model.seller.product.get.GetSellerProductResponse
 import com.binar.secondhand.data.api.model.seller.product.post.PostProductResponse
 import okhttp3.MultipartBody
@@ -65,8 +69,14 @@ interface ApiService {
     @GET("buyer/product/{user_id}")
     suspend fun getUserProfile(@Path("user_id")userid:Int): Response<UserProduct>
 
+
+    @GET("buyer/order")
+    suspend fun getBuyerOrder(): List<GetOrderResponse.GetOrderResponseItem>
+
     @POST("buyer/order")
-    suspend fun postBuyerOrder(@Body request: PostOrderRequest): Response<PostOrderResponse>
+    suspend fun postBuyerOrder(
+        @Body requestBuyerOrder: PostOrderRequest
+    ): Response<PostOrderResponse>
 
     @Multipart
     @POST("seller/product")
@@ -96,4 +106,13 @@ interface ApiService {
     //product sale endpoint
     @GET("seller/product")
     suspend fun getSellerProduct():Response<GetSellerProductResponse>
+
+    @GET("seller/order")
+    suspend fun getSellerOrder(): Response<com.binar.secondhand.data.api.model.seller.order.GetOrderResponse>
+
+    @GET("seller/order/{id}")
+    suspend fun getSellerOrderId(@Path("id")id:Int): Response<SellerOrderIdResponse>
+
+    @PATCH("seller/order/{id}")
+    suspend fun patchSellerOrderId(@Path("id")id:Int,@Body request: PatchSellerOrderIdRequest): Response<PatchSellerOrderIdResponse>
 }

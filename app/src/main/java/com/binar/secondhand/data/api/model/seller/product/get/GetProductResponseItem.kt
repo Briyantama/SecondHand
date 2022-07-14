@@ -1,7 +1,6 @@
 package com.binar.secondhand.data.api.model.seller.product.get
 
 
-import com.binar.secondhand.data.api.model.seller.product.get.Category
 import com.google.gson.annotations.SerializedName
 
 data class GetProductResponseItem(

@@ -1,6 +1,5 @@
 package com.binar.secondhand.data.api.model.auth.user
 
-
 import com.google.gson.annotations.SerializedName
 
 data class PutAuthResponse(

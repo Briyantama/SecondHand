@@ -10,22 +10,15 @@ import com.binar.secondhand.databinding.BannerBinding
 import com.binar.secondhand.databinding.FragmentHomeBinding
 import com.bumptech.glide.Glide
 
-class BannerAdapter(private val onClick: (GetBannerResponseItem) -> Unit) :
+class BannerAdapter() :
     ListAdapter<GetBannerResponseItem, BannerAdapter.ViewHolder>(CommunityComparator()) {
 
 
     class ViewHolder(private val binding: BannerBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(
-            currentBanner: GetBannerResponseItem,
-            onClick: (GetBannerResponseItem) -> Unit
-        ) {
-            binding.root.setOnClickListener {
-                onClick(currentBanner)
-            }
+        fun bind(currentBanner: GetBannerResponseItem) {
             Glide.with(binding.root).load(currentBanner.imageUrl).into(binding.root)
-
         }
 
     }
@@ -55,7 +48,7 @@ class BannerAdapter(private val onClick: (GetBannerResponseItem) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position), onClick)
+        holder.bind(getItem(position))
     }
 
 }

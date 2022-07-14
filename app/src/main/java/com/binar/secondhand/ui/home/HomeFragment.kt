@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.binar.secondhand.R
 import com.binar.secondhand.helper.Sharedpref
@@ -13,15 +13,18 @@ import com.binar.secondhand.data.api.model.buyer.product.GetProductResponse
 import com.binar.secondhand.data.api.model.seller.banner.get.GetBannerResponse
 import com.binar.secondhand.data.resource.Status
 import com.binar.secondhand.databinding.FragmentHomeBinding
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
+    private var isLogin = false
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private val homeViewModel by viewModel<HomeViewModel>()
+    private val viewModel by viewModel<HomeViewModel>()
+    private val sharedPref get() = Sharedpref(requireContext())
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,23 +38,28 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val sharedPref = Sharedpref(requireContext())
+
+        val token = getKoin().getProperty("access_token", "")
+        isLogin = token != ""
+        sharedPref.putBooleanKey("login", isLogin)
+
         val status = sharedPref.getBooleanKey("login")
         if (!status){
-            view.findNavController().navigate(R.id.action_navigation_home_to_loginFragment)
+            Navigation.findNavController(binding.root).navigate(R.id.action_navigation_home_to_loginFragment)
         }
+
         setUpObserver()
 
-        homeViewModel.getHomeBanner()
-        homeViewModel.getHomeCategory()
+        viewModel.getHomeBanner()
+        viewModel.getHomeCategory()
 
         binding.tabHomeCategory.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 //do filter product here
                 if (tab?.id == -1){
-                    homeViewModel.getHomeProduct()
+                    viewModel.getHomeProduct()
                 }else{
-                    homeViewModel.getHomeProduct(categoryId = tab?.id)
+                    viewModel.getHomeProduct(categoryId = tab?.id)
                 }
             }
 
@@ -66,7 +74,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setUpObserver() {
-        homeViewModel.getBannerResponse.observe(viewLifecycleOwner) {
+        viewModel.getBannerResponse.observe(viewLifecycleOwner) {
             when (it.status) {
 
                 Status.LOADING -> {
@@ -81,18 +89,18 @@ class HomeFragment : Fragment() {
                         }
 
                         else ->{
-                            Snackbar.make(binding.root, "Error occured: ${it.data?.code()}", Snackbar.LENGTH_INDEFINITE).show()
+                            viewModel.snackbar("Error occured: ${it.data?.code()}", binding.root)
                         }
                     }
                 }
 
                 Status.ERROR -> {
-                    Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_INDEFINITE).show()
+                    viewModel.snackbar("${it.message}", binding.root)
                 }
             }
         }
 
-        homeViewModel.getCategoryResponse.observe(viewLifecycleOwner) {
+        viewModel.getCategoryResponse.observe(viewLifecycleOwner) {
             when (it.status) {
 
                 Status.LOADING -> {
@@ -125,18 +133,18 @@ class HomeFragment : Fragment() {
                         }
 
                         else ->{
-                            Snackbar.make(binding.root, "Error occured: ${it.data?.code()}", Snackbar.LENGTH_LONG).show()
+                            viewModel.snackbar("Error occured: ${it.data?.code()}", binding.root)
                         }
                     }
                 }
 
                 Status.ERROR -> {
-                    Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_LONG).show()
+                    viewModel.snackbar("${it.message}", binding.root)
                 }
             }
         }
 
-        homeViewModel.getHomeProductResponse.observe(viewLifecycleOwner) {
+        viewModel.getHomeProductResponse.observe(viewLifecycleOwner) {
             when (it.status) {
 
                 Status.LOADING -> {
@@ -153,13 +161,13 @@ class HomeFragment : Fragment() {
 
                         }
                         else ->{
-                            Snackbar.make(binding.root, "Error occured: ${it.data?.code()}", Snackbar.LENGTH_INDEFINITE).show()
+                            viewModel.snackbar("Error occured: ${it.data?.code()}", binding.root)
                         }
                     }
                 }
 
                 Status.ERROR -> {
-                    Snackbar.make(binding.root, "${it.message}", Snackbar.LENGTH_INDEFINITE).show()
+                    viewModel.snackbar("${it.message}", binding.root)
                 }
             }
         }
@@ -167,12 +175,8 @@ class HomeFragment : Fragment() {
 
     private fun showHomeBanner(data: GetBannerResponse?) {
         if (data?.size != 0){
-            val adapter = BannerAdapter {
-                //onclick item
-            }
-
+            val adapter = BannerAdapter()
             adapter.submitList(data)
-
             binding.vpHomeBanner.adapter = adapter
         }
     }

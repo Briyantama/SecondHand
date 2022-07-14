@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.binar.secondhand.ui.login.LoginFragment"
+        android:name="com.binar.secondhand.ui.auth.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -85,17 +85,17 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.binar.secondhand.ui.login.RegisterFragment"
+        android:name="com.binar.secondhand.ui.auth.register.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/changePassFragment"
-        android:name="com.binar.secondhand.ChangePassFragment"
+        android:name="com.binar.secondhand.ui.akun.change_pass.ChangePassFragment"
         android:label="fragment_change_pass"
         tools:layout="@layout/fragment_change_pass" />
     <fragment
         android:id="@+id/ubahAkunFragment"
-        android:name="com.binar.secondhand.UbahAkunFragment"
+        android:name="com.binar.secondhand.ui.akun.edit_akun.UbahAkunFragment"
         android:label="fragment_ubah_akun"
         tools:layout="@layout/fragment_ubah_akun" />
 

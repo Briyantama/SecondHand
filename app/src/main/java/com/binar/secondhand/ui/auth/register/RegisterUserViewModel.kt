@@ -1,4 +1,4 @@
-package com.binar.secondhand.ui.login
+package com.binar.secondhand.ui.auth.register
 
 import android.content.Context
 import android.view.View
@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.binar.secondhand.data.api.model.auth.register.PostRegisterRequest
 import com.binar.secondhand.data.api.model.auth.register.PostRegisterResponse
-import com.binar.secondhand.data.repository.RegisterRepository
 import com.binar.secondhand.data.resource.Resource
-import com.binar.secondhand.helper.HelperShowPassword
-import com.binar.secondhand.helper.NotifHelper
+import com.binar.secondhand.helper.ShowPassword
+import com.binar.secondhand.helper.Notif
+import com.binar.secondhand.data.repository.RegisterRepository
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -21,8 +21,8 @@ class RegisterUserViewModel(private val repository: RegisterRepository): ViewMod
 
     private val _registerPostResponse = MutableLiveData<Resource<Response<PostRegisterResponse>>>()
     val registerPostResponse: LiveData<Resource<Response<PostRegisterResponse>>> get() = _registerPostResponse
-    private val showPass get() = HelperShowPassword()
-    private val notif get() = NotifHelper()
+    private val showPass get() = ShowPassword()
+    private val notif get() = Notif()
 
     fun postRegister(request: PostRegisterRequest){
         viewModelScope.launch {

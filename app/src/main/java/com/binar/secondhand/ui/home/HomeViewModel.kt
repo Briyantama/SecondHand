@@ -1,5 +1,7 @@
 package com.binar.secondhand.ui.home
 
+import android.content.Context
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +11,7 @@ import com.binar.secondhand.data.api.model.seller.category.get.GetCategoryRespon
 import com.binar.secondhand.data.api.model.buyer.product.GetProductResponse
 import com.binar.secondhand.data.repository.HomeRepository
 import com.binar.secondhand.data.resource.Resource
+import com.binar.secondhand.helper.Notif
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -16,6 +19,7 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
 
     private val _getBannerResponse = MutableLiveData<Resource<Response<GetBannerResponse>>>()
     val getBannerResponse: LiveData<Resource<Response<GetBannerResponse>>> get() = _getBannerResponse
+    private val notif get() = Notif()
 
     fun getHomeBanner() {
         viewModelScope.launch {
@@ -62,7 +66,6 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         }
     }
 
-
     private val _getCategoryResponse =
         MutableLiveData<Resource<Response<GetCategoryResponse>>>()
     val getCategoryResponse: LiveData<Resource<Response<GetCategoryResponse>>> get() = _getCategoryResponse
@@ -80,6 +83,18 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
                     )
                 )
             }
+        }
+    }
+
+    fun toast(message : String, context: Context) {
+        viewModelScope.launch {
+            notif.showToast(message, context)
+        }
+    }
+
+    fun snackbar(message : String, view: View) {
+        viewModelScope.launch {
+            notif.showSnackbar(message, view)
         }
     }
 

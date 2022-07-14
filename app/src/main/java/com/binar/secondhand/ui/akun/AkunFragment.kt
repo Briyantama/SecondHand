@@ -14,6 +14,7 @@ import com.binar.secondhand.databinding.FragmentAkunBinding
 import com.binar.secondhand.helper.Sharedpref
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AkunFragment : Fragment() {
@@ -21,7 +22,7 @@ class AkunFragment : Fragment() {
     private var _binding: FragmentAkunBinding? = null
     private val binding get() = _binding!!
     private val viewModel : AkunViewModel by viewModel()
-    private lateinit var sharedPref : Sharedpref
+    private val sharedPref get() = Sharedpref(requireContext())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,25 +36,19 @@ class AkunFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val token = getKoin().getProperty("access_token", "")
+
         viewModel.getAuth()
         setUpAccount()
-        sharedPref = Sharedpref(requireContext())
-        val status =  sharedPref.getBooleanKey("login")
 
         binding.ubahAkun.setOnClickListener {
-            if (!status){
-                Navigation.findNavController(view).navigate(R.id.action_navigation_akun_to_loginFragment)
-            }else{
-                Navigation.findNavController(view).navigate(R.id.action_navigation_akun_to_ubahAkunFragment)
-            }
+            Navigation.findNavController(view).navigate(R.id.action_navigation_akun_to_ubahAkunFragment)
         }
+
         binding.pengaturan.setOnClickListener {
-            if (!status){
-                Navigation.findNavController(view).navigate(R.id.action_navigation_akun_to_loginFragment)
-            }else{
-                Navigation.findNavController(view).navigate(R.id.action_navigation_akun_to_changePassFragment)
-            }
+            Navigation.findNavController(view).navigate(R.id.action_navigation_akun_to_changePassFragment)
         }
+
         binding.keluar.setOnClickListener {
             val dialog = AlertDialog.Builder(view.context)
             dialog.setTitle("Logout")
@@ -61,8 +56,8 @@ class AkunFragment : Fragment() {
             dialog.setPositiveButton("Yakin") { _, _ ->
                 Snackbar.make(binding.root, "User Berhasil Logout", Snackbar.LENGTH_LONG)
                     .show()
-                val sharedPref = Sharedpref(requireContext())
                 sharedPref.clear()
+                getKoin().setProperty("access_token","")
                 Navigation.findNavController(requireView()).navigate(R.id.action_navigation_akun_to_loginFragment)
             }
             dialog.setNegativeButton("Batal") { listener, _ ->

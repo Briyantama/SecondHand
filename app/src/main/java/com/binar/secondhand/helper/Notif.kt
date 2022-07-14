@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
-class NotifHelper {
+class Notif {
 
     fun showToast(message : String, context: Context){
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()

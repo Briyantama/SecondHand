@@ -10,7 +10,7 @@ import androidx.viewbinding.ViewBinding
 import com.binar.secondhand.R
 import java.util.zip.Inflater
 
-class HelperShowPassword {
+class ShowPassword {
 
      fun showPassword(show : Boolean, edit : EditText, eye : ImageView){
          if (show){

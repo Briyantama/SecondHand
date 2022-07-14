@@ -27,6 +27,7 @@ class SecondHandApp: Application() {
     override fun onCreate() {
         super.onCreate()
         sharedpref = Sharedpref(getContext())
+        val token = sharedpref.getStringKey("token")
         FirebaseApp.initializeApp(this)
         startKoin {
             androidLogger()
@@ -37,6 +38,9 @@ class SecondHandApp: Application() {
                 networkModule,
                 databaseModule
             )
+            if (!token.isNullOrEmpty()){
+                koin.setProperty("access_token", token)
+            }
         }
     }
 }

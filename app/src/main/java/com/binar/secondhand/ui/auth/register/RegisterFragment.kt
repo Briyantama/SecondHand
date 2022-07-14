@@ -1,4 +1,4 @@
-package com.binar.secondhand.ui.login
+package com.binar.secondhand.ui.auth.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
