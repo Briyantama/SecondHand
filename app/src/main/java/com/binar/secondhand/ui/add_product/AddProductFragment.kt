@@ -66,7 +66,6 @@ class AddProductFragment : Fragment() {
                 }
             }
         })
-
 //        val kota = resources.getStringArray(R.array.city)
 //        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, kota)
 //        binding.edKotaProduk.setAdapter(arrayAdapter)
