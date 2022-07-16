@@ -82,9 +82,9 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2'
-    def lifecycle_version = "2.5.0-rc01"
+    def lifecycle_version = "2.5.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
@@ -94,20 +94,5 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     //image picker
     implementation 'com.github.dhaval2404:imagepicker:2.1'
-    //simmer
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
-    //Lottie Animation
-    implementation "com.airbnb.android:lottie:5.2.0"
-    //Loading Screen
-    implementation "com.github.sakshampruthi:custom-loading-screen:1.16"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
-
-    // Optional -- Mockito framework
-    testImplementation "org.mockito:mockito-core:4.6.1"
-    // Optional -- mockito-kotlin
-    testImplementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
-    // Optional -- Mockk framework
-    testImplementation "io.mockk:mockk:1.12.4"
-
     implementation 'me.relex:circleindicator:2.1.6'
 }

@@ -1,12 +1,13 @@
 package com.binar.secondhand.di
 
-import org.koin.dsl.module
+import com.binar.secondhand.ui.bagian_akun.akun.AkunViewModel
+import com.binar.secondhand.ui.bagian_akun.change_pass.ChangePassViewModel
+import com.binar.secondhand.ui.bagian_akun.edit_akun.UbahAkunViewModel
+import com.binar.secondhand.ui.bagian_auth.login.LoginUserViewModel
+import com.binar.secondhand.ui.bagian_auth.register.RegisterUserViewModel
+import com.binar.secondhand.ui.bagian_home.home.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf
-import com.binar.secondhand.ui.auth.login.LoginUserViewModel
-import com.binar.secondhand.ui.auth.register.RegisterUserViewModel
-import com.binar.secondhand.ui.home.HomeViewModel
-import com.binar.secondhand.ui.akun.AkunViewModel
-import com.binar.secondhand.ui.akun.edit_akun.UbahAkunViewModel
+import org.koin.dsl.module
 
 val viewModelModule = module {
 
@@ -20,4 +21,5 @@ val viewModelModule = module {
 
     viewModelOf(::UbahAkunViewModel)
 
+    viewModelOf(::ChangePassViewModel)
 }
