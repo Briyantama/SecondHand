@@ -19,7 +19,7 @@ class AkunViewModel(private val repository: Repository) : ViewModel() {
     val authGetResponse: LiveData<Resource<Response<GetAuthResponse>>> get() = _authGetResponse
     private val notif get() = Notif()
 
-    fun getAuth() {
+    internal fun getAuth() {
         viewModelScope.launch {
             _authGetResponse.postValue(Resource.loading())
             try {
@@ -31,19 +31,19 @@ class AkunViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun toast(message : String, context: Context) {
+    internal fun toast(message : String, context: Context) {
         viewModelScope.launch {
             notif.showToast(message, context)
         }
     }
 
-    fun snackbar(view: View, message: String){
+    internal fun snackbar(view: View, message: String){
         viewModelScope.launch {
             notif.showSnackbar(message, view)
         }
     }
 
-    fun dialog(
+    internal fun dialog(
         context: Context,
         judul: String,
         message: String,

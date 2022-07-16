@@ -33,4 +33,8 @@ class Util {
         return kursIndonesia.format(number).dropLast(3)
     }
 
+    fun harga(string: String) : String {
+        return if (string.isEmpty()) "0"
+        else DecimalFormat("#,###").format(string.replace("[^\\d]".toRegex(), "").toLong())
+    }
 }

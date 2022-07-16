@@ -14,7 +14,6 @@ import com.binar.secondhand.data.resource.Status
 import com.binar.secondhand.databinding.FragmentHomeBinding
 import com.binar.secondhand.helper.Sharedpref
 import com.google.android.material.tabs.TabLayout
-import org.koin.android.ext.android.getKoin
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
@@ -39,8 +38,10 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val token = getKoin().getProperty("access_token", "")
-        isLogin = token != ""
+        val token = sharedPref.getStringKey("token")
+        if (token!=""){
+            isLogin = true
+        }
         sharedPref.putBooleanKey("login", isLogin)
 
         val status = sharedPref.getBooleanKey("login")

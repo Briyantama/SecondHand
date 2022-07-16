@@ -75,10 +75,11 @@ class LoginFragment : Fragment() {
                         201 -> {
                             val data = it.data.body()
 
-                            val accesToken = data?.accessToken
+                            val accesToken = data?.accessToken.toString()
 
-                            getKoin().setProperty("access_token", accesToken.toString())
+                            getKoin().setProperty("access_token", accesToken)
                             sharedPref.putBooleanKey("login", true)
+                            sharedPref.putStringKey("token", accesToken)
                             viewModel.toast("Berhasil Login", requireContext())
                             findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
                         }
