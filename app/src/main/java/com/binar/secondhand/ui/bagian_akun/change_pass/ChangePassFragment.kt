@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.binar.secondhand.data.api.model.auth.password.PutPassRequest
 import com.binar.secondhand.data.resource.Status
 import com.binar.secondhand.databinding.FragmentChangePassBinding
@@ -51,6 +52,10 @@ class ChangePassFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         password()
+
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.btnGanti.setOnClickListener{
             val changePassReq = PutPassRequest(

@@ -18,13 +18,26 @@
         <action
             android:id="@+id/action_navigation_home_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_navigation_home_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_jual"
-        android:name="com.binar.secondhand.ui.add_product.AddProductFragment"
+        android:name="com.binar.secondhand.ui.bagian_product.add_product.AddProductFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_add_product" />
+        tools:layout="@layout/fragment_add_product" >
+        <action
+            android:id="@+id/action_navigation_jual_to_navigation_list"
+            app:destination="@id/navigation_list" />
+        <action
+            android:id="@+id/action_navigation_jual_to_sheetCategory"
+            app:destination="@id/sheetCategory" />
+        <action
+            android:id="@+id/action_navigation_jual_to_previewFragment"
+            app:destination="@id/previewFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notif"
@@ -98,5 +111,32 @@
         android:name="com.binar.secondhand.ui.bagian_akun.edit_akun.UbahAkunFragment"
         android:label="fragment_ubah_akun"
         tools:layout="@layout/fragment_ubah_akun" />
+    <dialog
+        android:id="@+id/sheetCategory"
+        android:name="com.binar.secondhand.ui.bagian_product.add_product.sheet_kategori.SheetCategory"
+        android:label="fragment_sheet_category"
+        tools:layout="@layout/fragment_sheet_category" />
+    <fragment
+        android:id="@+id/previewFragment"
+        android:name="com.binar.secondhand.ui.bagian_product.preview.PreviewFragment"
+        android:label="fragment_preview"
+        tools:layout="@layout/fragment_preview" >
+
+        <argument
+            android:name="dataPreview"
+            app:argType="com.binar.secondhand.data.local.room.model.DataPreview" />
+        <action
+            android:id="@+id/action_previewFragment_to_navigation_list"
+            app:destination="@id/navigation_list" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.binar.secondhand.ui.bagian_home.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
 </navigation>

@@ -1,7 +1,5 @@
 package com.binar.secondhand.data.api.service
 
-import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderRequest
-import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderResponse
 import com.binar.secondhand.data.api.model.auth.login.PostLoginRequest
 import com.binar.secondhand.data.api.model.auth.login.PostLoginResponse
 import com.binar.secondhand.data.api.model.auth.password.PutPassRequest
@@ -11,12 +9,15 @@ import com.binar.secondhand.data.api.model.auth.register.PostRegisterResponse
 import com.binar.secondhand.data.api.model.auth.user.GetAuthResponse
 import com.binar.secondhand.data.api.model.auth.user.PutAuthResponse
 import com.binar.secondhand.data.api.model.buyer.order.get.GetOrderResponse
-import com.binar.secondhand.data.api.model.notification.GetNotificationResponse
-import com.binar.secondhand.data.api.model.seller.banner.get.GetBannerResponse
-import com.binar.secondhand.data.api.model.seller.category.get.GetCategoryResponse
+import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderRequest
+import com.binar.secondhand.data.api.model.buyer.order.post.PostOrderResponse
 import com.binar.secondhand.data.api.model.buyer.product.GetProductResponse
 import com.binar.secondhand.data.api.model.buyer.productid.GetProductIdResponse
 import com.binar.secondhand.data.api.model.buyer.productid.UserProduct
+import com.binar.secondhand.data.api.model.notification.GetNotificationResponse
+import com.binar.secondhand.data.api.model.seller.banner.get.GetBannerResponse
+import com.binar.secondhand.data.api.model.seller.category.get.GetCategoryResponse
+import com.binar.secondhand.data.api.model.seller.category.get.GetCategoryResponseItem
 import com.binar.secondhand.data.api.model.seller.order.PatchSellerOrderIdRequest
 import com.binar.secondhand.data.api.model.seller.order.PatchSellerOrderIdResponse
 import com.binar.secondhand.data.api.model.seller.order.SellerOrderIdResponse
@@ -84,7 +85,7 @@ interface ApiService {
         @Part("name") name: RequestBody,
         @Part("description") description: RequestBody ?= null,
         @Part("base_price") base_price: RequestBody ?= null,
-        @Part("category_ids") category_ids: RequestBody,
+        @Part("category_ids") category_ids: List<Int>,
         @Part("location") location: RequestBody,
         @Part image: MultipartBody.Part?
     ): Response<PostProductResponse>
@@ -102,6 +103,8 @@ interface ApiService {
 
     @GET("seller/category")
     suspend fun getCategory(): Response<GetCategoryResponse>
+    @GET("seller/category")
+    suspend fun getCategoryItem(): List<GetCategoryResponseItem>
 
     //product sale endpoint
     @GET("seller/product")

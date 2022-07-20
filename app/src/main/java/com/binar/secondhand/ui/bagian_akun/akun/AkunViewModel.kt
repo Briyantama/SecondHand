@@ -17,7 +17,6 @@ class AkunViewModel(private val repository: Repository) : ViewModel() {
 
     private val _authGetResponse = MutableLiveData<Resource<Response<GetAuthResponse>>>()
     val authGetResponse: LiveData<Resource<Response<GetAuthResponse>>> get() = _authGetResponse
-    private val notif get() = Notif()
 
     internal fun getAuth() {
         viewModelScope.launch {
@@ -30,6 +29,8 @@ class AkunViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
+    private val notif get() = Notif()
 
     internal fun toast(message : String, context: Context) {
         viewModelScope.launch {

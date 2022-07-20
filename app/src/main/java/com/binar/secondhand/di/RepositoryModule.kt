@@ -17,4 +17,5 @@ val repositoryModule = module {
     singleOf(::Repository)
 
     singleOf(::ProductSaleListRepository)
+
 }

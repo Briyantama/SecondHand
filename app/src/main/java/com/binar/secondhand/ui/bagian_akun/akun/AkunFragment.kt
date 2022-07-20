@@ -84,7 +84,7 @@ class AkunFragment : Fragment() {
                                 Glide.with(requireContext())
                                     .load(it.data.body()?.imageUrl)
                                     .placeholder(R.color.black)
-                                    .transform(CenterCrop(), RoundedCorners(12))
+                                    .circleCrop()
                                     .into(binding.ivUserPhoto)
                             }
 

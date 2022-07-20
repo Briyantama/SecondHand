@@ -14,6 +14,45 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp">
 
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="Nama"
+            android:textColor="@color/primary_purple_dark"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profile_photo"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/iv_profile_photo"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile_photo"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/iv_profile_photo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_select_photo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/et_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_fi_search"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profile_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile_photo"
+            app:tint="@color/black" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="match_parent"
@@ -22,7 +61,7 @@
             app:cardElevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            app:layout_constraintTop_toBottomOf="@+id/iv_profile_photo">
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/vp_home_banner"
@@ -30,7 +69,19 @@
                 android:layout_height="match_parent">
 
             </androidx.viewpager2.widget.ViewPager2>
+
         </androidx.cardview.widget.CardView>
+
+        <me.relex.circleindicator.CircleIndicator3
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="-8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/textView4"
@@ -76,32 +127,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:clipToPadding="true"
+            android:orientation="horizontal"
             android:paddingHorizontal="16dp"
             android:paddingTop="4dp"
-            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tab_home_category"
             app:spanCount="2"
             tools:listitem="@layout/item_home" />
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/rectangle_white"
-            android:queryBackground="@android:color/transparent"
-            app:iconifiedByDefault="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:queryHint="Cari di Second Hand"
-            app:searchIcon="@drawable/ic_fi_search" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

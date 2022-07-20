@@ -3,6 +3,7 @@ package com.binar.secondhand.helper
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -11,16 +12,17 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.github.dhaval2404.imagepicker.ImagePicker
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ImageFile {
-    private var imageUri : Uri? = null
+
     private val format = "dd-MMM-yyyy"
     private val timeStamp: String = SimpleDateFormat(
         format,
@@ -53,53 +55,6 @@ class ImageFile {
         return myFile
     }
 
-    private fun profileImage(fragment: Fragment, context: Context, user : ImageView, view: View) =
-            fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { result: ActivityResult ->
-                val resultCode = result.resultCode
-                val data = result.data
-                when (resultCode) {
-                    Activity.RESULT_OK -> {
-                        val fileUri = data?.data
-                        imageUri = fileUri
-                        loadImage(fileUri, user, view)
-                    }
-                    ImagePicker.RESULT_ERROR -> {
-                        Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_LONG)
-                    }
-                    else -> {
-                    }
-                }
-            }
-
-
-    private fun loadImage(uri: Uri?, user : ImageView, view: View) {
-        uri?.let {
-            Glide.with(view)
-                .load(it)
-                .into(user)
-        }
-    }
-
-    fun openImagePicker(fragment: Fragment, context: Context, user : ImageView, view: View) {
-        ImagePicker.with(fragment)
-            .crop(1f, 1f)
-            .saveDir(
-                File(
-                    context.externalCacheDir,
-                    "ImagePicker"
-                )
-            )
-            .compress(1024)
-            .maxResultSize(
-                1080,
-                1080
-            )
-            .createIntent { intent ->
-                profileImage(fragment, context, user, view).launch(intent)
-            }
-    }
-
     fun reduceImageSize(file: File): File {
         val bitmap = BitmapFactory.decodeFile(file.path)
         var compressQuality = 100
@@ -115,4 +70,50 @@ class ImageFile {
         return file
     }
 
+    fun startImageResult(view: View, image: ImageView, context: Context, result: ActivityResult, action: (Uri) -> Unit) {
+        val resultCode = result.resultCode
+        val data = result.data
+        when (resultCode) {
+            Activity.RESULT_OK -> {
+                val fileUri = data?.data
+                action(fileUri!!)
+                loadImage(fileUri, view, image)
+            }
+            ImagePicker.RESULT_ERROR -> {
+                Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            else -> {
+            }
+        }
+    }
+
+    fun openImagePicker(fragment: Fragment, context: Context, action: (Intent) -> Unit) {
+        ImagePicker.with(fragment)
+            .crop()
+            .saveDir(
+                File(
+                    context.externalCacheDir,
+                    "ImagePicker"
+                )
+            )
+            .compress(1024)
+            .maxResultSize(
+                1080,
+                1080
+            )
+            .createIntent { intent ->
+                action(intent)
+            }
+    }
+
+    private fun loadImage(uri: Uri?, view: View, image : ImageView) {
+        uri?.let {
+            Glide.with(view)
+                .load(it)
+                .centerCrop()
+                .apply(RequestOptions.bitmapTransform(RoundedCorners(16)))
+                .into(image)
+        }
+    }
 }

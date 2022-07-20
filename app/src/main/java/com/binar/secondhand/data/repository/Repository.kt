@@ -10,6 +10,7 @@ import okhttp3.RequestBody
 class Repository(private val apiHelper: ApiHelper) {
 
     suspend fun getAuth() = apiHelper.getAuth()
+    suspend fun getCategoryItem() = apiHelper.getCategoryItem()
 
     suspend fun putAuth(
         fullname: RequestBody,
@@ -41,7 +42,7 @@ class Repository(private val apiHelper: ApiHelper) {
         name: RequestBody,
         description: RequestBody,
         base_price: RequestBody,
-        category_ids: RequestBody,
+        category_ids: List<Int>,
         location: RequestBody,
         image: MultipartBody.Part?
     ) = apiHelper.postProduct(
@@ -52,7 +53,7 @@ class Repository(private val apiHelper: ApiHelper) {
         location,
         image
     )
-    suspend fun getSellerOrderId(id:Int) = apiHelper.getSellerOrderId(id)
 
+    suspend fun getSellerOrderId(id:Int) = apiHelper.getSellerOrderId(id)
     suspend fun patchSellerOrderId(id:Int, request: PatchSellerOrderIdRequest) = apiHelper.patchSellerOrderId(id, request)
 }

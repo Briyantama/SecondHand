@@ -19,8 +19,8 @@ class Notif {
     fun showSnackbarWithAction(
         message: String,
         actionText: String,
-        action: () -> Any,
-        view: View
+        view: View,
+        action: () -> Any
     ) {
         val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
         snackBar.setAction(actionText) { action.invoke() }
@@ -29,12 +29,25 @@ class Notif {
 
     fun showSnackbarGreen(
         message: String,
-        action: () -> Any,
         view: View,
-        resources: Resources
+        resources: Resources,
+        action: () -> Any
     ) {
         val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
             .setBackgroundTint(resources.getColor(R.color.green))
+            .setActionTextColor(resources.getColor(R.color.white))
+        snackBar.setAction("X") { action.invoke() }
+        snackBar.show()
+    }
+
+    fun showSnackbarRed(
+        message: String,
+        view: View,
+        resources: Resources,
+        action: () -> Any
+    ) {
+        val snackBar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+            .setBackgroundTint(resources.getColor(R.color.red))
             .setActionTextColor(resources.getColor(R.color.white))
         snackBar.setAction("X") { action.invoke() }
         snackBar.show()

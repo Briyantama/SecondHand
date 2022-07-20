@@ -6,11 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.binar.secondhand.R
 import com.binar.secondhand.data.resource.Status
 import com.binar.secondhand.databinding.FragmentUbahAkunBinding
+import com.binar.secondhand.helper.ImageFile
+import com.binar.secondhand.helper.Notif
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
@@ -26,6 +31,17 @@ class UbahAkunFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: UbahAkunViewModel by viewModel()
     private var imageUri : Uri? = null
+    private val notif get() = Notif()
+    private val image get() = ImageFile()
+    private val profileImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                result: ActivityResult -> image.startImageResult(
+            requireView(),
+            binding.ivUser,
+            requireContext(),
+            result ) { uri ->
+                    imageUri = uri
+        } }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +58,6 @@ class UbahAkunFragment : Fragment() {
         val kota = resources.getStringArray(R.array.city)
         val adapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, kota)
         binding.edKota.setAdapter(adapter)
-        binding.edKota.enoughToFilter()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,8 +66,17 @@ class UbahAkunFragment : Fragment() {
         viewModel.getAuth()
         profile()
 
+        binding.btnBack.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
         binding.ivUser.setOnClickListener {
-            viewModel.imagePicker(requireParentFragment(), requireContext(), binding.ivUser, requireView())
+            image.openImagePicker(
+                requireParentFragment(),
+                requireContext()
+            ){ intent ->
+                profileImage.launch(intent)
+            }
         }
 
         binding.btnBack.setOnClickListener {
@@ -68,13 +92,13 @@ class UbahAkunFragment : Fragment() {
 
                 val imageFile =
                     if (imageUri == null){ null }
-                    else{ viewModel.uriToFile(imageUri!!, requireContext()) }
+                    else{ image.uriToFile(imageUri!!, requireContext()) }
 
                 val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
                 val cityBody = city.toRequestBody("text/plain".toMediaTypeOrNull())
                 val addressBody = address.toRequestBody("text/plain".toMediaTypeOrNull())
                 val phoneNumberBody = phoneNumber.toRequestBody("text/plain".toMediaTypeOrNull())
-                val requestImage = imageFile?.let { viewModel.reduceImage(it).asRequestBody("image/jpg".toMediaTypeOrNull()) }
+                val requestImage = imageFile?.let { image.reduceImageSize(it).asRequestBody("image/jpg".toMediaTypeOrNull()) }
                 val imageBody = requestImage?.let { MultipartBody.Part.createFormData("image", imageFile.name, it) }
 
                 viewModel.putAuth(
@@ -99,18 +123,18 @@ class UbahAkunFragment : Fragment() {
                 Status.SUCCESS -> {
                     when(it.data?.code()){
                         200 ->{
-                            viewModel.snackbarGreen("Sukses mengedit akun", binding.snackbar, resources)
+                            notif.showSnackbarGreen("Sukses mengedit akun", binding.snackbar, resources){}
                             Navigation.findNavController(requireView()).navigateUp()
                         }
                         403 ->{
-                            viewModel.snackbarGreen("Error code : 403", binding.snackbar, resources)
+                            notif.showSnackbarGreen("Error code : 403", binding.snackbar, resources){}
                         }
                     }
                 }
 
                 Status.ERROR ->{
                     val error = it.message.toString()
-                    viewModel.snackbarGreen(error, binding.snackbar, resources)
+                    notif.showSnackbarGreen(error, binding.snackbar, resources){}
                 }
             }
         }
@@ -136,7 +160,7 @@ class UbahAkunFragment : Fragment() {
                                 Glide.with(requireContext())
                                     .load(it.data.body()?.imageUrl)
                                     .placeholder(R.color.black)
-                                    .transform(CenterCrop(), RoundedCorners(50))
+                                    .circleCrop()
                                     .into(binding.ivUser)
                             }
                             binding.edNama.setText(it.data.body()?.fullName)
@@ -149,7 +173,7 @@ class UbahAkunFragment : Fragment() {
 
                 Status.ERROR ->{
                     val error = it.message.toString()
-                    viewModel.snackbarGreen(error, binding.snackbar, resources)
+                    notif.showSnackbarGreen(error, binding.snackbar, resources){}
                 }
             }
         }

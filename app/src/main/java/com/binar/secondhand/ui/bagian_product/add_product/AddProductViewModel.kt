@@ -1,39 +1,28 @@
-package com.binar.secondhand.ui.add_product
+package com.binar.secondhand.ui.bagian_product.add_product
 
-import android.content.Context
-import android.content.res.Resources
-import android.net.Uri
-import android.view.View
-import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.binar.secondhand.data.api.model.seller.category.get.GetCategoryResponseItem
 import com.binar.secondhand.data.api.model.seller.product.post.PostProductResponse
 import com.binar.secondhand.data.repository.Repository
 import com.binar.secondhand.data.resource.Resource
-import com.binar.secondhand.helper.ImageFile
-import com.binar.secondhand.helper.Notif
-import com.binar.secondhand.helper.Util
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import java.io.File
 
 class AddProductViewModel(private val repository: Repository): ViewModel() {
+
     private val _sellerPostProduct = MutableLiveData<Resource<Response<PostProductResponse>>>()
     val sellerPostProduct: LiveData<Resource<Response<PostProductResponse>>> get() = _sellerPostProduct
-    private val notif get() = Notif()
-    private val image get() = ImageFile()
-    private val util get() = Util()
 
     fun postProduct(
         name: RequestBody,
         description: RequestBody,
         base_price: RequestBody,
-        category_ids: RequestBody,
+        category_ids: List<Int>,
         location: RequestBody,
         image: MultipartBody.Part?
     ){
@@ -56,30 +45,29 @@ class AddProductViewModel(private val repository: Repository): ViewModel() {
         }
     }
 
-    internal fun toast(message : String, context: Context) {
+    private val _category = MutableLiveData<Resource<List<GetCategoryResponseItem>>>()
+    val category : LiveData<Resource<List<GetCategoryResponseItem>>> get() = _category
+
+    fun getCategory() {
         viewModelScope.launch {
-            notif.showToast(message, context)
+            _category.postValue(Resource.loading())
+            try {
+                _category.postValue(Resource.success(repository.getCategoryItem()))
+            } catch (exp: Exception) {
+                _category.postValue(
+                    Resource.error(
+                        exp.localizedMessage ?: "Error occured"
+                    )
+                )
+            }
         }
     }
 
-    internal fun snackbarGreen(message : String, view: View, resources: Resources) {
-        viewModelScope.launch {
-            notif.showSnackbarGreen(message, {}, view, resources)
-        }
+    private var _categoryList = MutableLiveData<List<String>>()
+    val categoryList : LiveData<List<String>> get() = _categoryList
+
+    fun addCategory(category: List<String>){
+        _categoryList.postValue(category)
     }
 
-    internal fun imagePicker(fragment: Fragment, context: Context, user : ImageView, view: View) {
-        viewModelScope.launch {
-            image.openImagePicker(fragment, context, user, view)
-        }
-    }
-
-    fun harga(string: String){
-        viewModelScope.launch {
-            util.harga(string)
-        }
-    }
-
-    internal fun reduceImage(file: File): File { return image.reduceImageSize(file) }
-    internal fun uriToFile(file : Uri, context: Context) : File { return image.uriToFile(file, context) }
 }

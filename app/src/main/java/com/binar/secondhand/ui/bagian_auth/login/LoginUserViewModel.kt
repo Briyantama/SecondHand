@@ -12,8 +12,8 @@ import com.binar.secondhand.data.api.model.auth.login.PostLoginRequest
 import com.binar.secondhand.data.api.model.auth.login.PostLoginResponse
 import com.binar.secondhand.data.repository.LoginRepository
 import com.binar.secondhand.data.resource.Resource
-import com.binar.secondhand.helper.ShowPassword
 import com.binar.secondhand.helper.Notif
+import com.binar.secondhand.helper.ShowPassword
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -54,9 +54,9 @@ class LoginUserViewModel(private val repository: LoginRepository): ViewModel() {
                 }
         }
 
-        fun snackbarWithAction(message : String, actionText : String, action: () -> Any, view: View) {
+        fun snackbarWithAction(message : String, actionText : String, view: View, action: () -> Any) {
                 viewModelScope.launch {
-                        notif.showSnackbarWithAction(message, actionText, action, view)
+                        notif.showSnackbarWithAction(message, actionText, view, action)
                 }
         }
 }

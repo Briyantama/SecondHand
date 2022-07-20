@@ -112,4 +112,30 @@
         <item>Tual</item>
         <item>Yogyakarta</item>
     </string-array>
+    <string-array name="kategori">
+        <item>Elektronik</item>
+        <item>Komputer dan Aksesoris</item>
+        <item>Handphone dan Aksesoris</item>
+        <item>Pakaian Pria</item>
+        <item>Sepatu Pria</item>
+        <item>Tas Pria</item>
+        <item>Aksesoris Fashion</item>
+        <item>Kesehatan</item>
+        <item>Hobi dan Koleksi</item>
+        <item>Makanan dan Minuman</item>
+        <item>Perawatan dan Kecantikan</item>
+        <item>Perlengkapan Rumah</item>
+        <item>Pakaian Wanita</item>
+        <item>Fashion Muslim</item>
+        <item>Fashion bayi dan Anak</item>
+        <item>Ibu dan Bayi</item>
+        <item>Sepatu Wanita</item>
+        <item>Tas Wanita</item>
+        <item>Otomotif</item>
+        <item>Olahraga dan Outdoor</item>
+        <item>Buku dan Alat Tulis</item>
+        <item>Voucher</item>
+        <item>Souvenir dan Pesta</item>
+        <item>Fotografi</item>
+    </string-array>
 </resources>

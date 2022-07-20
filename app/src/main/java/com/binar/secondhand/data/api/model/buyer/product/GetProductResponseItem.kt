@@ -1,7 +1,6 @@
 package com.binar.secondhand.data.api.model.buyer.product
 
 
-import com.binar.secondhand.data.api.model.buyer.product.Category
 import com.google.gson.annotations.SerializedName
 
 data class GetProductResponseItem(
@@ -20,7 +19,7 @@ data class GetProductResponseItem(
     @SerializedName("location")
     val location: String,
     @SerializedName("name")
-    val name: String,
+    val name: String?,
     @SerializedName("updated_at")
     val updatedAt: String,
     @SerializedName("user_id")

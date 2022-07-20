@@ -85,7 +85,7 @@ class LoginFragment : Fragment() {
                         }
 
                         401 -> {
-                            viewModel.snackbarWithAction("Email or Password Are Wrong","Oke", {}, requireView())
+                            viewModel.snackbarWithAction("Email or Password Are Wrong","Oke", requireView()){}
                         }
 
                         500 -> {

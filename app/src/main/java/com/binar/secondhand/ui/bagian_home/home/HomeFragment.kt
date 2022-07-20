@@ -13,6 +13,7 @@ import com.binar.secondhand.data.api.model.seller.banner.get.GetBannerResponse
 import com.binar.secondhand.data.resource.Status
 import com.binar.secondhand.databinding.FragmentHomeBinding
 import com.binar.secondhand.helper.Sharedpref
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,7 +24,6 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel by viewModel<HomeViewModel>()
     private val sharedPref get() = Sharedpref(requireContext())
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,10 +49,15 @@ class HomeFragment : Fragment() {
             Navigation.findNavController(binding.root).navigate(R.id.action_navigation_home_to_loginFragment)
         }
 
-        setUpObserver()
-
+        viewModel.getAuth()
         viewModel.getHomeBanner()
         viewModel.getHomeCategory()
+
+        setUpObserver()
+
+        binding.etSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_home_to_searchFragment)
+        }
 
         binding.tabHomeCategory.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -69,6 +74,7 @@ class HomeFragment : Fragment() {
 
         })
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -171,6 +177,34 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+
+        viewModel.authGetResponse.observe(viewLifecycleOwner){
+            when (it.status) {
+
+                Status.LOADING -> {
+                }
+
+                Status.SUCCESS -> {
+                    when (it.data?.code()) {
+                        200 -> {
+                            Glide.with(requireContext())
+                                .load(it.data.body()?.imageUrl)
+                                .circleCrop()
+                                .placeholder(R.color.black)
+                                .error(R.drawable.ic_select_photo)
+                                .into(binding.ivProfilePhoto)
+
+                            binding.tvUserName.text = it.data.body()?.fullName
+                        }
+                    }
+                }
+
+                Status.ERROR -> {
+                    val error = it.message
+                    viewModel.toast("Error get Data : $error", requireContext())
+                }
+            }
+        }
     }
 
     private fun showHomeBanner(data: GetBannerResponse?) {
@@ -178,6 +212,7 @@ class HomeFragment : Fragment() {
             val adapter = BannerAdapter()
             adapter.submitList(data)
             binding.vpHomeBanner.adapter = adapter
+            binding.indicator.setViewPager(binding.vpHomeBanner)
         }
     }
 
@@ -186,10 +221,7 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionNavigationHomeToDetailFragment(it.id)
             findNavController().navigate(action)
         }
-
         adapter.submitList(productResponse)
-
         binding.rvHomeProduct.adapter = adapter
-
     }
 }

@@ -50,7 +50,7 @@ class ChangePassViewModel(private val repository: Repository): ViewModel() {
 
     fun snackbarGreen(message : String, view: View, resources: Resources) {
         viewModelScope.launch {
-            notif.showSnackbarGreen(message, {}, view, resources)
+            notif.showSnackbarGreen(message, view, resources){}
         }
     }
 }
